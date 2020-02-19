@@ -6,7 +6,7 @@ namespace SampleApp9000
     [KnownType(typeof(Rectangle), "rectangle")]
     [KnownType(typeof(Square), "square")]
     [KnownType(typeof(Circle), "circle")]
-    [ConfigurationSectionTypeConverter("type")]
+    [TypeConverter("type")]
     public abstract class Shape
     {
         public abstract double Area { get; }
