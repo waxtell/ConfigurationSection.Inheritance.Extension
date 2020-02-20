@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-namespace ConfigurationSection.Inheritance.Extension.Extensions
+// ReSharper disable once CheckNamespace
+namespace ConfigurationSection.Inheritance.Extension
 {
     internal static class TypeInfoExtensions
     {

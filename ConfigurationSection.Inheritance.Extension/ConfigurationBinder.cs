@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using ConfigurationSection.Inheritance.Extension.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace ConfigurationSection.Inheritance.Extension
@@ -14,7 +13,7 @@ namespace ConfigurationSection.Inheritance.Extension
     /// <summary>
     /// Static helper class that allows binding strongly typed objects to configuration values.
     /// </summary>
-    public static class ConfigurationBinderEx
+    public static class ConfigurationBinder
     {
         /// <summary>
         /// Attempts to bind the configuration instance to a new instance of type T.
@@ -24,8 +23,8 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <typeparam name="T">The type of the new instance to bind.</typeparam>
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <returns>The new instance of T if successful, default(T) otherwise.</returns>
-        public static T GetX<T>(this IConfiguration configuration)
-            => configuration.Get<T>(_ => { });
+        public static T GetEx<T>(this IConfiguration configuration)
+            => configuration.GetEx<T>(_ => { });
 
         /// <summary>
         /// Attempts to bind the configuration instance to a new instance of type T.
@@ -36,14 +35,14 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="configureOptions">Configures the binder options.</param>
         /// <returns>The new instance of T if successful, default(T) otherwise.</returns>
-        public static T Get<T>(this IConfiguration configuration, Action<BinderOptions> configureOptions)
+        public static T GetEx<T>(this IConfiguration configuration, Action<BinderOptions> configureOptions)
         {
             if (configuration == null)
             {
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            var result = configuration.Get(typeof(T), configureOptions);
+            var result = configuration.GetEx(typeof(T), configureOptions);
             if (result == null)
             {
                 return default(T);
@@ -59,8 +58,8 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="type">The type of the new instance to bind.</param>
         /// <returns>The new instance if successful, null otherwise.</returns>
-        public static object Get(this IConfiguration configuration, Type type)
-            => configuration.Get(type, _ => { });
+        public static object GetEx(this IConfiguration configuration, Type type)
+            => configuration.GetEx(type, _ => { });
 
         /// <summary>
         /// Attempts to bind the configuration instance to a new instance of type T.
@@ -71,7 +70,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="type">The type of the new instance to bind.</param>
         /// <param name="configureOptions">Configures the binder options.</param>
         /// <returns>The new instance if successful, null otherwise.</returns>
-        public static object Get(this IConfiguration configuration, Type type, Action<BinderOptions> configureOptions)
+        public static object GetEx(this IConfiguration configuration, Type type, Action<BinderOptions> configureOptions)
         {
             if (configuration == null)
             {
@@ -89,16 +88,16 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="key">The key of the configuration section to bind.</param>
         /// <param name="instance">The object to bind.</param>
-        public static void Bind(this IConfiguration configuration, string key, object instance)
-            => configuration.GetSection(key).Bind(instance);
+        public static void BindEx(this IConfiguration configuration, string key, object instance)
+            => configuration.GetSection(key).BindEx(instance);
 
         /// <summary>
         /// Attempts to bind the given object instance to configuration values by matching property names against configuration keys recursively.
         /// </summary>
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="instance">The object to bind.</param>
-        public static void Bind(this IConfiguration configuration, object instance)
-            => configuration.Bind(instance, o => { });
+        public static void BindEx(this IConfiguration configuration, object instance)
+            => configuration.BindEx(instance, o => { });
 
         /// <summary>
         /// Attempts to bind the given object instance to configuration values by matching property names against configuration keys recursively.
@@ -106,7 +105,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="instance">The object to bind.</param>
         /// <param name="configureOptions">Configures the binder options.</param>
-        public static void Bind(this IConfiguration configuration, object instance, Action<BinderOptions> configureOptions)
+        public static void BindEx(this IConfiguration configuration, object instance, Action<BinderOptions> configureOptions)
         {
             if (configuration == null)
             {
@@ -128,9 +127,9 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration.</param>
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <returns>The converted value.</returns>
-        public static T GetValue<T>(this IConfiguration configuration, string key)
+        public static T GetValueEx<T>(this IConfiguration configuration, string key)
         {
-            return GetValue(configuration, key, default(T));
+            return GetValueEx(configuration, key, default(T));
         }
 
         /// <summary>
@@ -141,9 +140,9 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <param name="defaultValue">The default value to use if no value is found.</param>
         /// <returns>The converted value.</returns>
-        public static T GetValue<T>(this IConfiguration configuration, string key, T defaultValue)
+        public static T GetValueEx<T>(this IConfiguration configuration, string key, T defaultValue)
         {
-            return (T)GetValue(configuration, typeof(T), key, defaultValue);
+            return (T)GetValueEx(configuration, typeof(T), key, defaultValue);
         }
 
         /// <summary>
@@ -153,9 +152,9 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="type">The type to convert the value to.</param>
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <returns>The converted value.</returns>
-        public static object GetValue(this IConfiguration configuration, Type type, string key)
+        public static object GetValueEx(this IConfiguration configuration, Type type, string key)
         {
-            return GetValue(configuration, type, key, defaultValue: null);
+            return GetValueEx(configuration, type, key, defaultValue: null);
         }
 
         /// <summary>
@@ -166,7 +165,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <param name="defaultValue">The default value to use if no value is found.</param>
         /// <returns>The converted value.</returns>
-        public static object GetValue(this IConfiguration configuration, Type type, string key, object defaultValue)
+        public static object GetValueEx(this IConfiguration configuration, Type type, string key, object defaultValue)
         {
             var section = configuration.GetSection(key);
             var value = section.Value;

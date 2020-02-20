@@ -15,24 +15,27 @@ namespace SampleApp9000
                             .AddJsonFile(@"appsettings.json");
 
             var config = builder.Build();
-var shapes = config.GetSection("Shapes").GetX<List<Shape>>();
-            //var converter = ConverterFactory.Create<Shape>();
+            
+            var shapes = config
+                            .GetSection("Shapes")
+                            .GetEx<List<Shape>>();
 
             foreach (var shape in shapes)
             {
-                Console.WriteLine($"Type:  {shape}");
-                Console.WriteLine($"Area: {shape.Area}");
-                Console.WriteLine($"Perimeter: {shape.Perimeter}");
+                Console.WriteLine($"Type: {shape}");
+                Console.WriteLine($"  Area: {shape.Area}");
+                Console.WriteLine($"  Perimeter: {shape.Perimeter}");
             }
 
-            //foreach (var child in config.GetSection("Shapes").GetChildren())
-            //{
-            //    var shape = converter.Bind(child);
-
-            //    Console.WriteLine($"Type:  {shape}");
-            //    Console.WriteLine($"Area: {shape.Area}");
-            //    Console.WriteLine($"Perimeter: {shape.Perimeter}");
-            //}
+            // Type: Circle
+            //   Area: 17.2
+            //   Perimeter: 14.7
+            // Type: Square
+            //   Area: 32.1489
+            //   Perimeter: 22.68
+            // Type: Rectangle
+            //   Area: 131.88
+            //   Perimeter: 90.28
         }
     }
 }

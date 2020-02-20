@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using ConfigurationSection.Inheritance.Extension.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace ConfigurationSection.Inheritance.Extension
