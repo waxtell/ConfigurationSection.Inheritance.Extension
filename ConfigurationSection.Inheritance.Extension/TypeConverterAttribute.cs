@@ -3,11 +3,11 @@
 namespace ConfigurationSection.Inheritance.Extension
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class ConfigurationSectionTypeConverterAttribute : Attribute
+    public class TypeConverterAttribute : Attribute
     {
         public string Discriminator { get; }
 
-        public ConfigurationSectionTypeConverterAttribute(string discriminator)
+        public TypeConverterAttribute(string discriminator)
         {
             Discriminator = discriminator;
         }
