@@ -29,21 +29,5 @@ namespace ConfigurationSection.Inheritance.Extension
 
             return default;
         }
-
-        //public T Bind(IConfigurationSection section)
-        //{
-        //    var (type, _) = _types.FirstOrDefault(x => x.key == section[_discriminator]);
-
-        //    if (type != null && !type.IsAbstract && type.HasParameterlessConstructor())
-        //    {
-        //        var instance = Activator.CreateInstance(type);
-
-        //        section.Bind(instance);
-
-        //        return (T) instance;
-        //    }
-
-        //    return default;
-        //}
     }
 }

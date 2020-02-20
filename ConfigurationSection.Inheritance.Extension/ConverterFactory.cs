@@ -7,15 +7,8 @@ namespace ConfigurationSection.Inheritance.Extension
 {
     public class ConverterFactory
     {
-        //public static ConfigSectionConverter<TTarget> Create<TTarget>()
-        //{
-        //    return (ConfigSectionConverter<TTarget>) Create(typeof(TTarget));
-        //}
-
         public static ConfigSectionConverter Create(Type targetType)
         {
-//            var targetType = typeof(TTarget);
-
             var typeConverter = targetType
                                     .GetCustomAttributes(typeof(TypeConverterAttribute), false)
                                     .FirstOrDefault();
@@ -29,12 +22,10 @@ namespace ConfigurationSection.Inheritance.Extension
                                     .ToArray();
 
                 return 
-  //                  (ConfigSectionConverter<TTarget>)
-  (ConfigSectionConverter)
+                    (ConfigSectionConverter)
                         Activator
                             .CreateInstance
                             (
-//                                typeof(ConfigSectionConverter<>).MakeGenericType(targetType),
                                 typeof(ConfigSectionConverter),
                                 BindingFlags.CreateInstance,
                                 null,

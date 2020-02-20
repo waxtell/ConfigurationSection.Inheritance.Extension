@@ -14,7 +14,7 @@ namespace ConfigurationSection.Inheritance.Extension
     /// <summary>
     /// Static helper class that allows binding strongly typed objects to configuration values.
     /// </summary>
-    public static class ConfigurationBinder
+    public static class ConfigurationBinderEx
     {
         /// <summary>
         /// Attempts to bind the configuration instance to a new instance of type T.
@@ -24,7 +24,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <typeparam name="T">The type of the new instance to bind.</typeparam>
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <returns>The new instance of T if successful, default(T) otherwise.</returns>
-        public static T Get<T>(this IConfiguration configuration)
+        public static T GetX<T>(this IConfiguration configuration)
             => configuration.Get<T>(_ => { });
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration instance to bind.</param>
         /// <param name="key">The key of the configuration section to bind.</param>
         /// <param name="instance">The object to bind.</param>
-        public static void BindX(this IConfiguration configuration, string key, object instance)
+        public static void Bind(this IConfiguration configuration, string key, object instance)
             => configuration.GetSection(key).Bind(instance);
 
         /// <summary>
@@ -128,9 +128,9 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="configuration">The configuration.</param>
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <returns>The converted value.</returns>
-        public static T GetValueX<T>(this IConfiguration configuration, string key)
+        public static T GetValue<T>(this IConfiguration configuration, string key)
         {
-            return GetValueX(configuration, key, default(T));
+            return GetValue(configuration, key, default(T));
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace ConfigurationSection.Inheritance.Extension
         /// <param name="key">The key of the configuration section's value to convert.</param>
         /// <param name="defaultValue">The default value to use if no value is found.</param>
         /// <returns>The converted value.</returns>
-        public static T GetValueX<T>(this IConfiguration configuration, string key, T defaultValue)
+        public static T GetValue<T>(this IConfiguration configuration, string key, T defaultValue)
         {
             return (T)GetValue(configuration, typeof(T), key, defaultValue);
         }

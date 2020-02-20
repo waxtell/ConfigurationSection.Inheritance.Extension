@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 
 namespace ConfigurationSection.Inheritance.Extension.Extensions
 {
@@ -10,14 +8,6 @@ namespace ConfigurationSection.Inheritance.Extension.Extensions
         {
             return 
                 type.IsValueType || type.GetConstructor(Type.EmptyTypes) != null;
-        }
-
-        public static bool HasTypeConverterAttribute(this TypeInfo type)
-        {
-            return
-                type
-                    .GetCustomAttributes(typeof(TypeConverterAttribute), false)
-                    .Any();
         }
     }
 }

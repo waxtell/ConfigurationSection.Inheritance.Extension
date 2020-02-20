@@ -15,8 +15,7 @@ namespace SampleApp9000
                             .AddJsonFile(@"appsettings.json");
 
             var config = builder.Build();
-            List<Shape> shapes = new List<Shape>();
-config.BindX("Shapes",shapes);
+var shapes = config.GetSection("Shapes").GetX<List<Shape>>();
             //var converter = ConverterFactory.Create<Shape>();
 
             foreach (var shape in shapes)
