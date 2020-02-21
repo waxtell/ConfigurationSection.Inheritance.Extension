@@ -8,8 +8,8 @@
     <RepositoryUrl>https://github.com/waxtell/ConfigurationSection.Inheritance.Extension.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>IConfiguration binder inheritance heterogeneous</PackageTags>
-    <PackageReleaseNotes>1.0.0- Initial release</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <PackageReleaseNotes>1.0.2- Initial release</PackageReleaseNotes>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
