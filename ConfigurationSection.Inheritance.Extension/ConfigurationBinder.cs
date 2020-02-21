@@ -362,19 +362,19 @@ namespace ConfigurationSection.Inheritance.Extension
                             .CreateInstance(section);
                 }
 
-                throw new Exception();
+                throw new InvalidOperationException($"Cannot create instance of type '{type}' because it is abstract and lacks the [TypeConverter(...)] attribute.");
             }
 
             if (typeInfo.IsInterface)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Cannot create instance of type '{type}' because it is an interface.");
             }
 
             if (type.IsArray)
             {
                 if (typeInfo.GetArrayRank() > 1)
                 {
-                    throw new Exception();
+                    throw new InvalidOperationException($"Cannot create instance of type '{type}' because multidimensional arrays are not supported.");
                 }
 
                 return Array.CreateInstance(typeInfo.GetElementType(), 0);
@@ -383,7 +383,7 @@ namespace ConfigurationSection.Inheritance.Extension
             var hasDefaultConstructor = typeInfo.DeclaredConstructors.Any(ctor => ctor.IsPublic && ctor.GetParameters().Length == 0);
             if (!hasDefaultConstructor)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Cannot create instance of type '{type}' because it is missing a public parameterless constructor.");
             }
 
             try
@@ -392,7 +392,7 @@ namespace ConfigurationSection.Inheritance.Extension
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Failed to create instance of type '{type}'.", ex);
             }
         }
 
@@ -526,7 +526,7 @@ namespace ConfigurationSection.Inheritance.Extension
                 }
                 catch (Exception ex)
                 {
-                    error = new Exception();
+                    error = new InvalidOperationException($"Failed to convert configuration value at '{path}' to type '{type}'.", ex);
                 }
                 return true;
             }
